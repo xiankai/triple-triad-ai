@@ -4,10 +4,8 @@ use crate::data_structures::{Action, State};
 use rand::Rng;
 
 pub fn compute_decisions(state: &State, counter: &mut u32) -> Vec<Tree> {
-    let actions = compute_actions(state);
-
     let mut decisions = vec![];
-    for action in actions.into_iter() {
+    for action in compute_actions(state).into_iter() {
         *counter += 1;
         let next_state = compute_next_state(state, &action);
         let children = compute_decisions(&next_state, counter);

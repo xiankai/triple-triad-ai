@@ -2,27 +2,11 @@ pub mod tree;
 use tree::Tree;
 pub mod opponent_plays_random_action;
 
-use crate::data_structures::{rules::Rule, Card, State};
+use crate::data_structures::{State};
 
-pub fn dp() {
-    let card = Card {
-        top: 3,
-        bottom: 3,
-        left: 6,
-        right: 3,
-        star: 1,
-        card_type: None,
-    };
-
-    let state = State {
-        board: [None; 9],
-        hand: [Some(card); 5],
-        opponent: [Some(card); 5],
-        rules: [None, None, None, Some(Rule::Plus)],
-    };
-
+pub fn dp(state: State, mut decision_counter: &mut u32) {
     let mut amortized_value_board = [0.0 as f32; 9];
-    for decision in opponent_plays_random_action::compute_decisions(&state, &mut 0) {
+    for decision in opponent_plays_random_action::compute_decisions(&state, &mut decision_counter) {
         if let Some(action) = decision.action {
             amortized_value_board[action.position] = decision.amortized_value;
         }
