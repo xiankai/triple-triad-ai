@@ -110,7 +110,7 @@ impl State {
             panic!("not supposed to happen :(");
         }
 
-        let flipped_positions = self.flip_positions(action.position, true);
+        self.flip_positions(action.position, true);
 
         if self.rules.contains(&Some(Rule::Plus)) && self.check_plus(action.position) {
             self.do_combo(action.position);
