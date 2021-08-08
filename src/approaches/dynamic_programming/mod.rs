@@ -1,12 +1,12 @@
 pub mod tree;
 use tree::Tree;
-pub mod opponent_plays_random_action;
+pub mod check_all_opponent_actions;
 
 use crate::data_structures::{State};
 
 pub fn dp(state: State, mut decision_counter: &mut u32) {
     let mut amortized_value_board = [0.0 as f32; 9];
-    for decision in opponent_plays_random_action::compute_decisions(&state, &mut decision_counter) {
+    for decision in check_all_opponent_actions::compute_decisions(&state, &mut decision_counter) {
         if let Some(action) = decision.action {
             amortized_value_board[action.position] = decision.amortized_value;
         }

@@ -6,8 +6,11 @@ pub fn compute_decisions(state: &State, counter: &mut u32) -> Vec<Tree> {
     let mut decisions = vec![];
     for action in compute_actions(state).into_iter() {
         *counter += 1;
-        let next_state = compute_next_state(state, &action);
-         next_state.invert();
+        if *counter % 100000 == 0 {
+            println!("{}", counter);
+        }
+        let mut next_state = compute_next_state(state, &action);
+        next_state.invert();
         let children = compute_decisions(&next_state, counter);
         let amortized_value = evaluate(&next_state, &children);
         let decision = Tree {
